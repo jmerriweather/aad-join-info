@@ -1,7 +1,4 @@
 use windows::{Win32::{
-    Security::Authentication::Identity::{
-        LsaFreeReturnBuffer
-    },
     NetworkManagement::NetManagement::{
         NetGetAadJoinInformation, NetFreeAadJoinInformation, DSREG_JOIN_INFO, DSREG_USER_INFO, DSREG_JOIN_TYPE
     }
@@ -44,7 +41,6 @@ impl From<DSREG_JOIN_TYPE> for AADJoinInformationJoinType {
         }
     }
 }
-
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct AADJoinInformation {
@@ -94,7 +90,6 @@ unsafe fn get_aad_join_info_unsafe() -> Option<AADJoinInformation> {
         None
     };
 
-    let _ = LsaFreeReturnBuffer(std::mem::transmute(SESSION_ID));
     NetFreeAadJoinInformation(join_info);
     aad_info
 }
