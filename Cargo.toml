@@ -1,9 +1,23 @@
 [package]
 name = "aad-join-info"
-version = "0.1.0"
+# When releasing to crates.io:
+# - Update doc url
+#   - Cargo.toml
+#   - README.md
+# - Create "v0.1.x" git tag.
+authors = ["Jonathan Merriweather <Jono@live.com>"]
+categories = ["system", "windows", "azure", "active directory"]
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+homepage = "https://github.com/jmerriweather/aad-join-info"
+description = """
+This rust crate enables someone to get the Azure Active Directory information for a Windows computer. 
+"""
+documentation = "https://docs.rs/aad-join-info/0.1.0"
+keywords = ["aad", "ad", "active directory", "azure", "azure active directory", "windows", "info"]
+license = "MIT"
+readme = "../README.md"
+repository = "https://github.com/jmerriweather/aad-join-info"
+version = "0.1.0"
 
 [lib]
 name = "aad_join_info"
