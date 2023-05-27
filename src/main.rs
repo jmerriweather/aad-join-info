@@ -1,5 +1,6 @@
-fn main() -> Result<(), Box<dyn std::error::Error>> {
+use std::error::Error;
 
+fn main() -> Result<(), Box<dyn Error>> {
     if let Some(aad_info) = aad_join_info::get_aad_join_info() {
         println!("Device ID: {}", aad_info.device_id);
         println!("Tenant ID: {}", aad_info.tenant_id);
