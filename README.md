@@ -8,7 +8,7 @@ To use `aad-join-info`, first add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-aad-join-info = "0.8"
+aad-join-info = "0.1"
 ```
 
 ```rust
