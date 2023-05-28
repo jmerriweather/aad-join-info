@@ -6,7 +6,7 @@ name = "aad-join-info"
 #   - README.md
 # - Create "v0.1.x" git tag.
 authors = ["Jonathan Merriweather <Jono@live.com>"]
-categories = ["system", "windows", "azure", "active directory"]
+categories = ["system", "windows", "azure", "active directory", "azure active directory"]
 edition = "2021"
 homepage = "https://github.com/jmerriweather/aad-join-info"
 description = """
