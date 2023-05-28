@@ -11,6 +11,7 @@ pub struct AADJoinInformationUserInfo {
     pub user_key_id: String,
 }
 
+#[cfg(target_os = "windows")]
 impl From<*mut DSREG_USER_INFO> for AADJoinInformationUserInfo {
     fn from(value: *mut DSREG_USER_INFO) -> Self {
         unsafe {
@@ -31,6 +32,7 @@ pub enum AADJoinInformationJoinType {
     WorkplaceJoin = 2,
 }
 
+#[cfg(target_os = "windows")]
 impl From<DSREG_JOIN_TYPE> for AADJoinInformationJoinType {
     fn from(value: DSREG_JOIN_TYPE) -> Self {
         match value {
@@ -57,10 +59,17 @@ pub struct AADJoinInformation {
     pub user_info: Option<AADJoinInformationUserInfo>,
 }
 
+#[cfg(not(target_os = "windows"))]
+pub fn get_aad_join_info() -> Option<AADJoinInformation> {
+    None
+}
+
+#[cfg(target_os = "windows")]
 pub fn get_aad_join_info() -> Option<AADJoinInformation> {
     unsafe { get_aad_join_info_unsafe() }
 }
 
+#[cfg(target_os = "windows")]
 unsafe fn get_aad_join_info_unsafe() -> Option<AADJoinInformation> {
     const SESSION_ID: PCWSTR = PCWSTR(std::ptr::null_mut());
 
