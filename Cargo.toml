@@ -10,7 +10,7 @@ categories = ["system", "windows", "azure", "active directory", "azure active di
 edition = "2021"
 homepage = "https://github.com/jmerriweather/aad-join-info"
 description = """
-This rust crate enables someone to get the Azure Active Directory information for a Windows computer. 
+This rust crate enables someone to get the Azure Active Directory join information for a Windows computer. 
 """
 documentation = "https://docs.rs/aad-join-info/0.1.0"
 keywords = ["aad", "azure", "active", "directory", "windows"]

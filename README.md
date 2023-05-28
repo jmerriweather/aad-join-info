@@ -1,6 +1,6 @@
 # AAD Join Info
 
-This rust crate enables someone to get the Azure Active Directory information for a Windows computer. 
+This rust crate enables someone to get the Azure Active Directory join information for a Windows computer. 
 
 ## Usage
 

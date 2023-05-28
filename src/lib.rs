@@ -1,3 +1,4 @@
+#[cfg(target_os = "windows")]
 use windows::{Win32::{
     NetworkManagement::NetManagement::{
         NetGetAadJoinInformation, NetFreeAadJoinInformation, DSREG_JOIN_INFO, DSREG_USER_INFO, DSREG_JOIN_TYPE
