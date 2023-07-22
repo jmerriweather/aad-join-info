@@ -1,9 +1,11 @@
 #[cfg(target_os = "windows")]
-use windows::{Win32::{
-    NetworkManagement::NetManagement::{
-        NetGetAadJoinInformation, NetFreeAadJoinInformation, DSREG_JOIN_INFO, DSREG_USER_INFO, DSREG_JOIN_TYPE
-    }
-}, core::{PCWSTR}};
+use windows::{
+    core::PCWSTR,
+    Win32::NetworkManagement::NetManagement::{
+        NetFreeAadJoinInformation, NetGetAadJoinInformation, DSREG_JOIN_INFO, DSREG_JOIN_TYPE,
+        DSREG_USER_INFO,
+    },
+};
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct AADJoinInformationUserInfo {
@@ -23,7 +25,15 @@ impl From<*mut DSREG_USER_INFO> for AADJoinInformationUserInfo {
                 user_key_name: user_info.pszUserKeyName.to_string().unwrap(),
             }
         }
-    }    
+    }
+}
+
+fn get_user_info(value: *mut DSREG_USER_INFO) -> Option<AADJoinInformationUserInfo> {
+    if value.is_null() {
+        None
+    } else {
+        Some(AADJoinInformationUserInfo::from(value))
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -74,14 +84,13 @@ pub fn get_aad_join_info() -> Option<AADJoinInformation> {
 unsafe fn get_aad_join_info_unsafe() -> Option<AADJoinInformation> {
     const SESSION_ID: PCWSTR = PCWSTR(std::ptr::null_mut());
 
-
     let join_info: Option<*const DSREG_JOIN_INFO> = match NetGetAadJoinInformation(SESSION_ID) {
         Ok(info) => Some(info),
-        Err(_) => { None },
+        Err(_) => None,
     };
 
-    let aad_info = if let Some(info) = join_info {    
-        let dsreg_info = *info;            
+    let aad_info = if let Some(info) = join_info {
+        let dsreg_info = *info;
         Some(AADJoinInformation {
             device_id: dsreg_info.pszDeviceId.to_string().unwrap(),
             idp_domain: dsreg_info.pszIdpDomain.to_string().unwrap(),
@@ -93,10 +102,9 @@ unsafe fn get_aad_join_info_unsafe() -> Option<AADJoinInformation> {
             user_setting_sync_url: dsreg_info.pszUserSettingSyncUrl.to_string().unwrap(),
             tenant_id: dsreg_info.pszTenantId.to_string().unwrap(),
             tenant_name: dsreg_info.pszTenantDisplayName.to_string().unwrap(),
-            user_info: Some(AADJoinInformationUserInfo::from(dsreg_info.pUserInfo))            
+            user_info: get_user_info(dsreg_info.pUserInfo),
         })
-    }
-    else {
+    } else {
         None
     };
 
